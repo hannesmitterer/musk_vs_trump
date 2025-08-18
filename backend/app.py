@@ -403,8 +403,8 @@ def get_latest_reputation():
         else:
             return jsonify({'error': 'No data available'}), 404
     except Exception as e:
-        logger.error(f"Error serving reputation data: {e}")
-        return jsonify({'error': str(e)}), 500
+        logger.error(f"Error serving reputation data: {e}", exc_info=True)
+        return jsonify({'error': 'An internal error has occurred.'}), 500
 
 
 @app.route('/api/reputation/refresh', methods=['POST'])
