@@ -265,7 +265,12 @@ class ReputationTracker:
         self.reputation_calculator = ReputationCalculator()
         
         # Ensure data directory exists
-        self.data_dir = Path('/home/runner/work/musk_vs_trump/musk_vs_trump/data')
+        data_dir_env = os.environ.get('DATA_DIR')
+        if data_dir_env:
+            self.data_dir = Path(data_dir_env)
+        else:
+            # Default to 'data' directory relative to this file
+            self.data_dir = Path(__file__).parent / 'data'
         self.data_dir.mkdir(exist_ok=True)
     
     async def run_full_analysis(self) -> PublishedResult:
