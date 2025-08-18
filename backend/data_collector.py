@@ -88,7 +88,7 @@ class DataCollector:
                     timestamp=datetime.now(),
                     source=DataSource.FRED,
                     subject=SubjectType.MUSK,  # Economic data affects both
-                    value=100.0 + hash(indicator) % 50,  # Mock value
+                    value=self.MOCK_FRED_BASE_VALUE + hash(indicator) % self.MOCK_FRED_VARIATION_RANGE,  # Mock value
                     metadata={'indicator': indicator, 'name': name}
                 ))
             return data_points
