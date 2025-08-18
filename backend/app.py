@@ -394,7 +394,8 @@ def index():
 def get_latest_reputation():
     """Get latest reputation scores."""
     try:
-        data_file = Path('/home/runner/work/musk_vs_trump/musk_vs_trump/data/reputation_data.json')
+        data_path = os.environ.get('REPUTATION_DATA_PATH', 'data/reputation_data.json')
+        data_file = Path(data_path)
         if data_file.exists():
             with open(data_file) as f:
                 data = json.load(f)
