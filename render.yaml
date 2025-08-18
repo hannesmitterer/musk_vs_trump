@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: musk-vs-trump
+    env: python
+    buildCommand: poetry install --only=main
+    startCommand: poetry run python backend/app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12

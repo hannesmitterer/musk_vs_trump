@@ -2,67 +2,53 @@
 
 # Backend Server Automation Script for musk_vs_trump project
 # This script automates the setup and startup of the backend server
+# Uses Poetry for dependency management
 
 set -e  # Exit on any error
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKEND_DIR="$SCRIPT_DIR"
+PROJECT_ROOT="$(dirname "$BACKEND_DIR")"
 
 echo "🚀 Starting backend server setup..."
 echo "Working directory: $BACKEND_DIR"
+echo "Project root: $PROJECT_ROOT"
 
 # Function to check if a command exists
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Check if Python is installed
-if ! command_exists python3; then
-    if ! command_exists python; then
-        echo "❌ Error: Python is not installed. Please install Python 3.x first."
-        exit 1
-    else
-        PYTHON_CMD="python"
-    fi
-else
-    PYTHON_CMD="python3"
+# Check if Poetry is installed
+if ! command_exists poetry; then
+    echo "❌ Error: Poetry is not installed."
+    echo "   Please install Poetry first: https://python-poetry.org/docs/#installation"
+    exit 1
 fi
 
-echo "✅ Using Python command: $PYTHON_CMD"
+echo "✅ Using Poetry: $(poetry --version)"
 
-# Step 1: Install Python dependencies from requirements.txt
-if [ -f "$BACKEND_DIR/requirements.txt" ]; then
-    echo "📦 Installing Python dependencies from requirements.txt..."
+# Step 1: Install Python dependencies using Poetry
+if [ -f "$PROJECT_ROOT/pyproject.toml" ]; then
+    echo "📦 Installing Python dependencies with Poetry..."
     
-    # Check if pip is available
-    if ! command_exists pip3 && ! command_exists pip; then
-        echo "❌ Error: pip is not installed. Please install pip first."
-        exit 1
-    fi
-    
-    # Use pip3 if available, otherwise use pip
-    if command_exists pip3; then
-        PIP_CMD="pip3"
-    else
-        PIP_CMD="pip"
-    fi
-    
-    $PIP_CMD install -r "$BACKEND_DIR/requirements.txt"
+    cd "$PROJECT_ROOT"
+    poetry install
     echo "✅ Dependencies installed successfully!"
 else
-    echo "⚠️  Warning: requirements.txt not found in $BACKEND_DIR"
+    echo "⚠️  Warning: pyproject.toml not found in $PROJECT_ROOT"
     echo "   Skipping dependency installation."
 fi
 
 # Step 2: Initialize the database using db_manager.create_tables()
 if [ -f "$BACKEND_DIR/db_manager.py" ]; then
     echo "🗄️  Initializing database..."
-    cd "$BACKEND_DIR"
+    cd "$PROJECT_ROOT"
     
-    # Run database initialization
-    $PYTHON_CMD -c "
+    # Run database initialization with Poetry
+    poetry run python -c "
 import sys
-sys.path.append('.')
+sys.path.append('backend')
 try:
     import db_manager
     if hasattr(db_manager, 'create_tables'):
@@ -82,17 +68,17 @@ else
     echo "   Skipping database initialization."
 fi
 
-# Step 3: Start the backend server (python app.py)
+# Step 3: Start the backend server using Poetry
 if [ -f "$BACKEND_DIR/app.py" ]; then
     echo "🌐 Starting backend server..."
-    cd "$BACKEND_DIR"
+    cd "$PROJECT_ROOT"
     
     echo "Server starting at: $(date)"
     echo "Press Ctrl+C to stop the server"
     echo "----------------------------------------"
     
-    # Start the server
-    $PYTHON_CMD app.py
+    # Start the server with Poetry
+    poetry run python backend/app.py
 else
     echo "❌ Error: app.py not found in $BACKEND_DIR"
     echo "   Cannot start the backend server."
