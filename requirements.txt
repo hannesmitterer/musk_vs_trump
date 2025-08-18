@@ -1,0 +1,7 @@
+# Root level requirements - includes backend requirements
+-r backend/requirements.txt
+
+# Additional development tools
+pytest>=7.4.0
+black>=23.7.0
+flake8>=6.0.0
