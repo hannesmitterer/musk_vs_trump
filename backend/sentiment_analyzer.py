@@ -82,7 +82,11 @@ class SentimentAnalyzer:
         
         # Trump keywords  
         trump_keywords = ['trump', 'donald', 'potus', 'president trump', 'mar-a-lago']
-        if any(keyword in text_lower for keyword in trump_keywords):
+        if any(keyword in text_lower for keyword in self.MUSK_KEYWORDS):
+            subjects.append(SubjectType.MUSK)
+        
+        # Trump keywords  
+        if any(keyword in text_lower for keyword in self.TRUMP_KEYWORDS):
             subjects.append(SubjectType.TRUMP)
             
         return subjects
