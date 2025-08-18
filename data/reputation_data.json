@@ -1,41 +1,41 @@
 {
-  "timestamp": "2025-08-18T02:46:32.315851",
+  "timestamp": "2025-08-18T06:17:56.629238",
   "musk_reputation": {
-    "timestamp": "2025-08-18T02:46:32.315750",
+    "timestamp": "2025-08-18T06:17:56.629102",
     "subject": "musk",
-    "overall_score": 61.932609639045396,
-    "sentiment_component": 77.85714285707988,
-    "economic_component": 50.0,
-    "social_component": 70.88095238095238,
+    "overall_score": 59.04805223323738,
+    "sentiment_component": 77.85714285698542,
+    "economic_component": 41.4451261077028,
+    "social_component": 69.29047619047618,
     "trust_component": 53.16853379433979,
     "confidence_interval": [
-      52.1326096390454,
-      71.73260963904539
+      49.248052233237374,
+      68.84805223323738
     ]
   },
   "trump_reputation": {
-    "timestamp": "2025-08-18T02:46:32.315847",
+    "timestamp": "2025-08-18T06:17:56.629233",
     "subject": "trump",
-    "overall_score": 54.634057027605536,
+    "overall_score": 53.1107701949491,
     "sentiment_component": 55.000000000000014,
-    "economic_component": 50.0,
-    "social_component": 70.88095238095238,
+    "economic_component": 45.982694684796044,
+    "social_component": 69.29047619047618,
     "trust_component": 46.83146620566019,
     "confidence_interval": [
-      44.83405702760554,
-      64.43405702760553
+      43.3107701949491,
+      62.910770194949095
     ]
   },
   "comparison_metrics": {
-    "reputation_difference": 7.29855261143986,
-    "sentiment_difference": 22.857142857079864,
+    "reputation_difference": 5.937282038288281,
+    "sentiment_difference": 22.857142856985405,
     "trust_difference": 6.337067588679595,
     "leader": "musk",
-    "confidence_gap": 7.29855261143986
+    "confidence_gap": 5.937282038288281
   },
   "publish_urls": [
     "https://hannesmitterer.github.io/musk_vs_trump/",
     "https://api.openrank.com/publish/musk_trump_reputation"
   ],
-  "data_freshness": "2025-08-18T02:46:32.315852"
+  "data_freshness": "2025-08-18T06:17:56.629238"
 }
