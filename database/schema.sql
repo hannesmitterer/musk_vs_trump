@@ -326,7 +326,15 @@ GRANT EXECUTE ON PROCEDURE reputation_tracker.GetLatestComparison TO 'reputation
 GRANT EXECUTE ON PROCEDURE reputation_tracker.InsertReputationScore TO 'reputation_app'@'%';
 
 -- Create read-only user for dashboard access
-CREATE USER IF NOT EXISTS 'reputation_readonly'@'%' IDENTIFIED BY 'readonly_password_here';
+-- IMPORTANT: Replace 'REPUTATION_APP_PASSWORD_HERE' with a strong, randomly generated password before running this script.
+CREATE USER IF NOT EXISTS 'reputation_app'@'%' IDENTIFIED BY 'REPUTATION_APP_PASSWORD_HERE';
+GRANT SELECT, INSERT, UPDATE ON reputation_tracker.* TO 'reputation_app'@'%';
+GRANT EXECUTE ON PROCEDURE reputation_tracker.GetLatestComparison TO 'reputation_app'@'%';
+GRANT EXECUTE ON PROCEDURE reputation_tracker.InsertReputationScore TO 'reputation_app'@'%';
+
+-- Create read-only user for dashboard access
+-- IMPORTANT: Replace 'REPUTATION_READONLY_PASSWORD_HERE' with a strong, randomly generated password before running this script.
+CREATE USER IF NOT EXISTS 'reputation_readonly'@'%' IDENTIFIED BY 'REPUTATION_READONLY_PASSWORD_HERE';
 GRANT SELECT ON reputation_tracker.* TO 'reputation_readonly'@'%';
 
 FLUSH PRIVILEGES;
