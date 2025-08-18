@@ -418,8 +418,8 @@ async def refresh_reputation():
         result = await tracker.run_full_analysis()
         return jsonify({'status': 'success', 'timestamp': result.timestamp.isoformat()})
     except Exception as e:
-        logger.error(f"Error refreshing reputation data: {e}")
-        return jsonify({'error': str(e)}), 500
+        logger.error(f"Error refreshing reputation data: {e}", exc_info=True)
+        return jsonify({'error': 'An internal error has occurred.'}), 500
 
 
 async def main():
