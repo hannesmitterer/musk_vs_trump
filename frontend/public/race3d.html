@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musk vs Trump - Live 3D Sentiment Race</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 300px;
+        }
+        
+        .score-display {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .musk-score {
+            background: rgba(255, 100, 100, 0.3);
+            border-left: 4px solid #ff6464;
+        }
+        
+        .trump-score {
+            background: rgba(100, 150, 255, 0.3);
+            border-left: 4px solid #6496ff;
+        }
+        
+        .status {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #ccc;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #fff;
+            font-size: 18px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="info">
+            <div class="title">🏁 LIVE SENTIMENT RACE</div>
+            <div class="loading">Loading 3D visualization...</div>
+            <div id="scores" style="display: none;">
+                <div class="score-display musk-score">
+                    <strong>🚀 Elon Musk</strong><br>
+                    Score: <span id="musk-score">0</span><br>
+                    Sentiment: <span id="musk-sentiment">0</span><br>
+                    <small><span id="musk-text">Loading...</span></small>
+                </div>
+                <div class="score-display trump-score">
+                    <strong>🇺🇸 Donald Trump</strong><br>
+                    Score: <span id="trump-score">0</span><br>
+                    Sentiment: <span id="trump-sentiment">0</span><br>
+                    <small><span id="trump-text">Loading...</span></small>
+                </div>
+                <div class="status">
+                    Updates every 10 seconds | Last update: <span id="last-update">Never</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="raceCanvas" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+    
+    <script>
+        // Global variables
+        let canvas, ctx;
+        let apiUrl = 'http://localhost:5000/api/race/leaderboard';
+        let currentData = null;
+        let animationFrame = 0;
+        let muskPosition = { x: 50, y: 0, targetX: 50 };
+        let trumpPosition = { x: 50, y: 0, targetX: 50 };
+        
+        // Initialize the 3D-like canvas scene
+        function init() {
+            canvas = document.getElementById('raceCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            resizeCanvas();
+            
+            // Start render loop
+            animate();
+            
+            // Hide loading and show scores
+            document.querySelector('.loading').style.display = 'none';
+            document.getElementById('scores').style.display = 'block';
+            
+            console.log('3D-style canvas scene initialized successfully!');
+        }
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        function drawRaceTrack() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const trackY = height * 0.6;
+            const trackHeight = height * 0.3;
+            
+            // Draw background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, '#1a1a2e');
+            gradient.addColorStop(0.5, '#16213e');
+            gradient.addColorStop(1, '#0f3460');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw track (3D perspective effect)
+            ctx.fillStyle = '#333333';
+            ctx.beginPath();
+            ctx.moveTo(width * 0.1, trackY);
+            ctx.lineTo(width * 0.9, trackY);
+            ctx.lineTo(width * 0.95, trackY + trackHeight);
+            ctx.lineTo(width * 0.05, trackY + trackHeight);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Draw lane dividers
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            const laneY1 = trackY + trackHeight * 0.3;
+            const laneY2 = trackY + trackHeight * 0.7;
+            
+            ctx.beginPath();
+            ctx.moveTo(width * 0.12, laneY1);
+            ctx.lineTo(width * 0.88, laneY1);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(width * 0.14, laneY2);
+            ctx.lineTo(width * 0.86, laneY2);
+            ctx.stroke();
+            
+            // Draw starting line
+            ctx.strokeStyle = '#00ff00';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.15, trackY);
+            ctx.lineTo(width * 0.15, trackY + trackHeight);
+            ctx.stroke();
+            
+            // Draw finish line
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.85, trackY);
+            ctx.lineTo(width * 0.85, trackY + trackHeight);
+            ctx.stroke();
+        }
+        
+        function drawAvatar(x, y, color, label, isFloating = false) {
+            const size = 30;
+            const floatOffset = isFloating ? Math.sin(animationFrame * 0.1) * 5 : 0;
+            
+            // Draw shadow
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.beginPath();
+            ctx.ellipse(x, y + size + 10, size * 0.8, size * 0.3, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw avatar body
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y + floatOffset, size, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw highlight
+            ctx.fillStyle = `${color}aa`;
+            ctx.beginPath();
+            ctx.arc(x - size * 0.3, y - size * 0.3 + floatOffset, size * 0.4, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, x, y - size - 10 + floatOffset);
+        }
+        
+        function updateAvatarPositions(data) {
+            if (!data || !data.musk || !data.trump) return;
+            
+            const width = canvas.width;
+            const startX = width * 0.15;
+            const endX = width * 0.85;
+            const raceDistance = endX - startX;
+            
+            // Calculate target positions based on scores (0-100)
+            muskPosition.targetX = startX + (raceDistance * (data.musk.score / 100));
+            trumpPosition.targetX = startX + (raceDistance * (data.trump.score / 100));
+            
+            // Smooth movement
+            muskPosition.x += (muskPosition.targetX - muskPosition.x) * 0.05;
+            trumpPosition.x += (trumpPosition.targetX - trumpPosition.x) * 0.05;
+        }
+        
+        function drawScene() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw race track
+            drawRaceTrack();
+            
+            // Calculate avatar positions
+            const trackY = canvas.height * 0.6;
+            const trackHeight = canvas.height * 0.3;
+            const muskY = trackY + trackHeight * 0.25;
+            const trumpY = trackY + trackHeight * 0.75;
+            
+            // Draw avatars
+            drawAvatar(muskPosition.x, muskY, '#ff4444', '🚀 MUSK', true);
+            drawAvatar(trumpPosition.x, trumpY, '#4444ff', '🇺🇸 TRUMP', true);
+            
+            // Draw progress indicators
+            if (currentData) {
+                const muskProgress = currentData.musk.score;
+                const trumpProgress = currentData.trump.score;
+                
+                // Progress bars
+                const barY = canvas.height * 0.1;
+                const barWidth = canvas.width * 0.3;
+                const barHeight = 20;
+                
+                // Musk progress bar
+                ctx.fillStyle = 'rgba(255, 68, 68, 0.3)';
+                ctx.fillRect(50, barY, barWidth, barHeight);
+                ctx.fillStyle = '#ff4444';
+                ctx.fillRect(50, barY, (barWidth * muskProgress / 100), barHeight);
+                
+                // Trump progress bar  
+                ctx.fillStyle = 'rgba(68, 68, 255, 0.3)';
+                ctx.fillRect(50, barY + 40, barWidth, barHeight);
+                ctx.fillStyle = '#4444ff';
+                ctx.fillRect(50, barY + 40, (barWidth * trumpProgress / 100), barHeight);
+                
+                // Progress text
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Musk: ${muskProgress}%`, 60, barY + 15);
+                ctx.fillText(`Trump: ${trumpProgress}%`, 60, barY + 55);
+            }
+            
+            // Draw title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('🏁 LIVE SENTIMENT RACE', canvas.width / 2, 40);
+        }
+        
+        function updateUI(data) {
+            if (!data) return;
+            
+            document.getElementById('musk-score').textContent = data.musk.score;
+            document.getElementById('musk-sentiment').textContent = data.musk.sentiment;
+            document.getElementById('musk-text').textContent = data.musk.text_sample;
+            
+            document.getElementById('trump-score').textContent = data.trump.score;
+            document.getElementById('trump-sentiment').textContent = data.trump.sentiment;
+            document.getElementById('trump-text').textContent = data.trump.text_sample;
+            
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+        }
+        
+        async function fetchLeaderboard() {
+            try {
+                const response = await fetch(apiUrl);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    currentData = result.leaderboard;
+                    updateUI(currentData);
+                    console.log('Leaderboard updated:', currentData);
+                } else {
+                    console.error('API error:', result.message);
+                }
+            } catch (error) {
+                console.error('Failed to fetch leaderboard:', error);
+            }
+        }
+        
+        function animate() {
+            animationFrame++;
+            
+            // Update avatar positions based on current data
+            if (currentData) {
+                updateAvatarPositions(currentData);
+            }
+            
+            // Draw the scene
+            drawScene();
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Handle window resize
+        function onWindowResize() {
+            resizeCanvas();
+        }
+        
+        window.addEventListener('resize', onWindowResize, false);
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            
+            // Fetch initial data
+            fetchLeaderboard();
+            
+            // Update every 10 seconds
+            setInterval(fetchLeaderboard, 10000);
+            
+            console.log('Musk vs Trump Live 3D Sentiment Race initialized!');
+        });
+    </script>
+</body>
+</html>
