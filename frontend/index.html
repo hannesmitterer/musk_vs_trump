@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musk vs Trump: AI-Powered Reputation Tracker</title>
+    
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <header class="header-section">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="main-title">
+                        <i class="fas fa-chart-line"></i>
+                        Musk vs Trump: AI-Powered Reputation Tracker
+                    </h1>
+                    <p class="lead">Real-time reputation analysis using AI, sentiment analysis, and EigenTrust algorithms</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button id="refreshBtn" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sync-alt"></i> Refresh Data
+                    </button>
+                    <div class="last-updated">
+                        <small class="text-muted">
+                            <i class="fas fa-clock"></i>
+                            Last updated: <span id="lastUpdated">Loading...</span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Current Scores Dashboard -->
+        <section class="scores-section">
+            <div class="row">
+                <!-- Musk Score Card -->
+                <div class="col-md-6">
+                    <div class="score-card musk-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-rocket"></i> Elon Musk</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="score-display">
+                                <span class="score-value" id="muskScore">--</span>
+                                <span class="score-unit">/100</span>
+                            </div>
+                            <div class="score-components">
+                                <div class="component">
+                                    <span class="component-label">Sentiment:</span>
+                                    <span class="component-value" id="muskSentiment">--</span>
+                                </div>
+                                <div class="component">
+                                    <span class="component-label">Economic:</span>
+                                    <span class="component-value" id="muskEconomic">--</span>
+                                </div>
+                                <div class="component">
+                                    <span class="component-label">Social:</span>
+                                    <span class="component-value" id="muskSocial">--</span>
+                                </div>
+                                <div class="component">
+                                    <span class="component-label">Trust:</span>
+                                    <span class="component-value" id="muskTrust">--</span>
+                                </div>
+                            </div>
+                            <div class="confidence-interval">
+                                <small class="text-muted">
+                                    95% CI: <span id="muskCI">--</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trump Score Card -->
+                <div class="col-md-6">
+                    <div class="score-card trump-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-flag-usa"></i> Donald Trump</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="score-display">
+                                <span class="score-value" id="trumpScore">--</span>
+                                <span class="score-unit">/100</span>
+                            </div>
+                            <div class="score-components">
+                                <div class="component">
+                                    <span class="component-label">Sentiment:</span>
+                                    <span class="component-value" id="trumpSentiment">--</span>
+                                </div>
+                                <div class="component">
+                                    <span class="component-label">Economic:</span>
+                                    <span class="component-value" id="trumpEconomic">--</span>
+                                </div>
+                                <div class="component">
+                                    <span class="component-label">Social:</span>
+                                    <span class="component-value" id="trumpSocial">--</span>
+                                </div>
+                                <div class="component">
+                                    <span class="component-label">Trust:</span>
+                                    <span class="component-value" id="trumpTrust">--</span>
+                                </div>
+                            </div>
+                            <div class="confidence-interval">
+                                <small class="text-muted">
+                                    95% CI: <span id="trumpCI">--</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section class="comparison-section">
+            <div class="row">
+                <div class="col-12">
+                    <div class="comparison-card">
+                        <h3><i class="fas fa-balance-scale"></i> Head-to-Head Comparison</h3>
+                        <div class="comparison-metrics">
+                            <div class="metric">
+                                <span class="metric-label">Current Leader:</span>
+                                <span class="metric-value" id="currentLeader">--</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Score Difference:</span>
+                                <span class="metric-value" id="scoreDifference">--</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Sentiment Gap:</span>
+                                <span class="metric-value" id="sentimentGap">--</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Trust Gap:</span>
+                                <span class="metric-value" id="trustGap">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <div class="row">
+                <!-- Time Series Chart -->
+                <div class="col-12">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-line"></i> Reputation Trends Over Time</h3>
+                        <div id="timeSeriesChart"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <!-- Component Comparison -->
+                <div class="col-md-6">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-bar"></i> Component Breakdown</h3>
+                        <div id="componentChart"></div>
+                    </div>
+                </div>
+                
+                <!-- Trust vs Sentiment Scatter -->
+                <div class="col-md-6">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-scatter-bubble"></i> Trust vs Sentiment</h3>
+                        <div id="scatterChart"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Sources Section -->
+        <section class="sources-section">
+            <div class="row">
+                <div class="col-12">
+                    <div class="sources-card">
+                        <h3><i class="fas fa-database"></i> Data Sources</h3>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="source-item">
+                                    <i class="fas fa-chart-area"></i>
+                                    <strong>Economic Data</strong>
+                                    <p>FRED, YCharts, Michigan Sentiment</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="source-item">
+                                    <i class="fas fa-comments"></i>
+                                    <strong>Sentiment Analysis</strong>
+                                    <p>Social Media, News (Transformers AI)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="source-item">
+                                    <i class="fas fa-network-wired"></i>
+                                    <strong>Trust Network</strong>
+                                    <p>OpenRank SDK, EigenTrust Algorithm</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 Musk vs Trump Reputation Tracker</p>
+                    <p><small>Powered by AI, OpenRank, and open data sources</small></p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="https://github.com/hannesmitterer/musk_vs_trump" class="btn btn-outline-light btn-sm">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Analyzing reputation data...</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# GitHub Pages - Jekyll Build
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# GitHub Actions Build
+docs/_site/
+
+# Node modules
+node_modules/
+
+# Temporary files
+tmp/

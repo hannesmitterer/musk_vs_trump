@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-08-18T02:44:33.672700",
+  "musk_reputation": {
+    "timestamp": "2025-08-18T02:44:33.672598",
+    "subject": "musk",
+    "overall_score": 61.864038210473964,
+    "sentiment_component": 77.85714285707988,
+    "economic_component": 50.0,
+    "social_component": 70.53809523809524,
+    "trust_component": 53.16853379433979,
+    "confidence_interval": [
+      52.06403821047397,
+      71.66403821047396
+    ]
+  },
+  "trump_reputation": {
+    "timestamp": "2025-08-18T02:44:33.672695",
+    "subject": "trump",
+    "overall_score": 54.56548559903409,
+    "sentiment_component": 55.00000000000001,
+    "economic_component": 50.0,
+    "social_component": 70.53809523809524,
+    "trust_component": 46.83146620566019,
+    "confidence_interval": [
+      44.76548559903409,
+      64.36548559903409
+    ]
+  },
+  "comparison_metrics": {
+    "reputation_difference": 7.298552611439874,
+    "sentiment_difference": 22.85714285707987,
+    "trust_difference": 6.337067588679595,
+    "leader": "musk",
+    "confidence_gap": 7.298552611439874
+  },
+  "publish_urls": [
+    "https://hannesmitterer.github.io/musk_vs_trump/",
+    "https://api.openrank.com/publish/musk_trump_reputation"
+  ],
+  "data_freshness": "2025-08-18T02:44:33.672700"
+}
