@@ -1,0 +1,429 @@
+/* Custom CSS for Musk vs Trump Reputation Tracker */
+
+:root {
+    --primary-color: #007bff;
+    --musk-color: #00d4aa;
+    --trump-color: #dc3545;
+    --background-color: #f8f9fa;
+    --card-background: #ffffff;
+    --text-color: #333333;
+    --border-color: #dee2e6;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --gradient-musk: linear-gradient(135deg, #00d4aa, #00b894);
+    --gradient-trump: linear-gradient(135deg, #dc3545, #c82333);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header Section */
+.header-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.main-title i {
+    color: #ffd700;
+    margin-right: 15px;
+}
+
+.lead {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.last-updated {
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Score Cards */
+.scores-section {
+    margin-bottom: 30px;
+}
+
+.score-card {
+    background: var(--card-background);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.score-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.musk-card .card-header {
+    background: var(--gradient-musk);
+    color: white;
+}
+
+.trump-card .card-header {
+    background: var(--gradient-trump);
+    color: white;
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: none;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.card-header i {
+    margin-right: 10px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.score-display {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.score-value {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    display: inline-block;
+}
+
+.musk-card .score-value {
+    color: var(--musk-color);
+}
+
+.trump-card .score-value {
+    color: var(--trump-color);
+}
+
+.score-unit {
+    font-size: 2rem;
+    color: #6c757d;
+    font-weight: 400;
+}
+
+.score-components {
+    margin-bottom: 20px;
+}
+
+.component {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.component:last-child {
+    border-bottom: none;
+}
+
+.component-label {
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.component-value {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.confidence-interval {
+    text-align: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Comparison Section */
+.comparison-section {
+    margin-bottom: 30px;
+}
+
+.comparison-card {
+    background: var(--card-background);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.comparison-card h3 {
+    margin-bottom: 25px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.comparison-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.metric {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.metric-label {
+    display: block;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 8px;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+/* Charts Section */
+.charts-section {
+    margin-bottom: 30px;
+}
+
+.chart-card {
+    background: var(--card-background);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    height: 100%;
+}
+
+.chart-card h3 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.chart-card h3 i {
+    margin-right: 10px;
+}
+
+/* Data Sources Section */
+.sources-section {
+    margin-bottom: 30px;
+}
+
+.sources-card {
+    background: var(--card-background);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.sources-card h3 {
+    margin-bottom: 25px;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-align: center;
+}
+
+.source-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.source-item i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.source-item strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.source-item p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Footer */
+.footer-section {
+    background: #343a40;
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-top: 40px;
+}
+
+.footer-section p {
+    margin: 0;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: white;
+}
+
+.loading-spinner .spinner-border {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 10px;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .lead {
+        font-size: 1rem;
+    }
+    
+    .score-value {
+        font-size: 3rem;
+    }
+    
+    .score-unit {
+        font-size: 1.5rem;
+    }
+    
+    .comparison-metrics {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-body, .comparison-card, .sources-card {
+        padding: 20px;
+    }
+    
+    .header-section {
+        padding: 20px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .score-value {
+        font-size: 2.5rem;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+}
+
+/* Chart specific styles */
+.plotly-graph-div {
+    width: 100% !important;
+    min-height: 400px;
+}
+
+/* Animation for score updates */
+.score-value, .component-value, .metric-value {
+    transition: all 0.5s ease;
+}
+
+.score-value.updating, .component-value.updating, .metric-value.updating {
+    opacity: 0.6;
+    transform: scale(0.95);
+}
+
+/* Status indicators */
+.status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.status-positive {
+    background-color: #28a745;
+}
+
+.status-negative {
+    background-color: #dc3545;
+}
+
+.status-neutral {
+    background-color: #ffc107;
+}
