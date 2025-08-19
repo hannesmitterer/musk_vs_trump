@@ -1,62 +1,113 @@
-# Musk vs Trump - AI Reputation Tracker
+# Musk vs Trump - Kernel Graph Visualization
 
-This project tracks and analyzes the reputation of public figures through AI-powered sentiment analysis.
+This project provides an interactive web application for visualizing kernel graph data representing influence networks and relationships between public figures, companies, and topics.
 
-## Project Structure
+## 🚀 Live Demo
+
+**Website**: [View Live Demo](https://hannesmitterer.github.io/musk_vs_trump) *(if deployed)*
+
+## ✨ Features
+
+### 🎯 Interactive Graph Visualization
+- **D3.js-powered visualization** with force-directed, circular, and hierarchical layouts
+- **Interactive controls**: Zoom, pan, drag nodes, hover tooltips
+- **Color-coded entities**: Different node types (persons, companies, platforms, topics)
+- **Relationship mapping**: Visual representation of connections and influences
+
+### 📊 Data Views
+- **Toggle between graph and data views** for comprehensive analysis
+- **Numeric tables** showing detailed node and edge information
+- **Sentiment analysis** with color-coded indicators
+- **Influence metrics** displayed as progress bars
+- **Real-time data** fetched from REST API
+
+### 📱 Responsive Design
+- **Mobile-friendly** interface that works on all devices
+- **Bootstrap-based** responsive layout
+- **Touch controls** for mobile graph interaction
+
+## 🏗️ Architecture
 
 ```
-/ai-reputation-tracker
-├── backend/
-│   ├── app.py                 # Main Flask/Django application
-│   ├── models.py              # Database models
-│   ├── data_collector.py      # Data collection logic
-│   ├── sentiment_analyzer.py  # AI sentiment analysis
-│   ├── db_manager.py          # Database management utilities
+├── backend/                    # Flask REST API
+│   ├── app.py                 # API endpoints with sample kernel graph data
+│   ├── db_manager.py          # Database utilities
 │   ├── requirements.txt       # Python dependencies
-│   └── start_backend.sh       # Backend automation script
-├── frontend/
-│   ├── App.js
-│   └── ReputationGraph.js
-├── database/
-│   └── schema.sql
-└── README.md
+│   └── start_backend.sh       # Automation script
+├── frontend/                   # Interactive web application
+│   ├── index.html            # Main application page
+│   ├── app.js                # JavaScript visualization logic
+│   ├── styles.css            # Custom styling
+│   └── README.md             # Frontend documentation
+└── .github/workflows/         # GitHub Pages deployment
+    └── deploy.yml            # Auto-deployment configuration
 ```
 
-## Backend Setup
+## 🚀 Quick Start
 
-### Automated Setup (Recommended)
+### 1. Backend Setup (Flask API)
 
-The backend includes two automation options for easy setup:
-
-#### Option 1: Shell Script
+#### Automated Setup (Recommended)
 ```bash
 cd backend
-./start_backend.sh
+./start_backend.sh  # Complete setup and server start
 ```
 
-#### Option 2: Makefile
+#### Manual Setup
 ```bash
 cd backend
-make setup  # Complete setup and start server
-# OR run individual steps:
-make install-deps  # Install dependencies only
-make init-db       # Initialize database only
-make start-server  # Start server only
-make help          # Show available commands
+pip3 install -r requirements.txt
+python3 -c "import db_manager; db_manager.create_tables()"
+python3 app.py  # Server starts on http://localhost:5000
 ```
 
-Both automation methods will:
-1. 🐍 **Install Python dependencies** from `requirements.txt`
-2. 🗄️ **Initialize the database** using `db_manager.create_tables()`
-3. 🌐 **Start the backend server** with `python app.py`
+### 2. Frontend Setup (Web Application)
 
-### Manual Setup
+#### Local Development
+```bash
+cd frontend
+python3 -m http.server 8080  # Serve on http://localhost:8080
+```
 
-If you prefer to set up the backend manually:
+#### GitHub Pages Deployment
+1. Enable GitHub Pages in repository settings
+2. GitHub Actions will auto-deploy the frontend
+3. Update API URL in `app.js` for production
 
-1. **Install dependencies:**
-   ```bash
-   cd backend
+## 🎮 Usage
+
+### Graph Visualization
+1. **Start the backend**: `cd backend && ./start_backend.sh`
+2. **Open frontend**: Navigate to `http://localhost:8080`
+3. **Interact with the graph**:
+   - Toggle between Graph and Data views
+   - Change layouts (Force, Circular, Hierarchical)
+   - Zoom, pan, and drag nodes
+   - Hover over nodes and edges for details
+
+### API Endpoints
+- `GET /api/graph` - Complete kernel graph data
+- `GET /api/graph/nodes` - Node data only
+- `GET /api/graph/edges` - Edge data only
+- `GET /health` - Health check
+
+## 🗂️ Data Structure
+
+The kernel graph represents relationships between entities:
+
+### Nodes
+- **Persons**: Elon Musk, Donald Trump
+- **Companies**: Tesla, SpaceX
+- **Platforms**: X (Twitter)
+- **Topics**: Politics, Technology, Social Media
+
+### Relationships
+- **Ownership**: Direct control relationships
+- **Leadership**: Management and direction
+- **Involvement**: Participation and engagement
+- **Influence**: Impact and effect patterns
+
+## 🛠️ Development
    pip3 install -r requirements.txt
    ```
 

@@ -1,0 +1,309 @@
+/* Custom CSS for Kernel Graph Visualizer */
+
+/* Graph container styling */
+.graph-container {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+}
+
+#graph-svg-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 70px); /* Account for controls */
+    overflow: hidden;
+}
+
+#graph-svg {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+#graph-svg:active {
+    cursor: grabbing;
+}
+
+/* Node styles */
+.node {
+    cursor: pointer;
+    stroke-width: 2px;
+    transition: all 0.2s ease;
+}
+
+.node:hover {
+    stroke-width: 3px;
+    filter: brightness(1.1);
+}
+
+.node.person {
+    fill: #ff6b6b;
+    stroke: #e55353;
+}
+
+.node.company {
+    fill: #4ecdc4;
+    stroke: #45b7aa;
+}
+
+.node.platform {
+    fill: #45b7d1;
+    stroke: #3a9bc1;
+}
+
+.node.topic {
+    fill: #96ceb4;
+    stroke: #85b8a3;
+}
+
+/* Edge styles */
+.link {
+    stroke-opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.link:hover {
+    stroke-opacity: 1;
+    stroke-width: 3px !important;
+}
+
+.link.ownership {
+    stroke: #ff6b6b;
+}
+
+.link.leadership {
+    stroke: #4ecdc4;
+}
+
+.link.involvement {
+    stroke: #45b7d1;
+}
+
+.link.influence {
+    stroke: #96ceb4;
+}
+
+.link.platform {
+    stroke: #ffd93d;
+}
+
+.link.usage {
+    stroke: #a8e6cf;
+}
+
+.link.industry {
+    stroke: #ff8b94;
+}
+
+/* Node labels */
+.node-label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    fill: #333;
+    text-anchor: middle;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Tooltip styles */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 1000;
+    max-width: 200px;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+}
+
+/* Legend styles */
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.node-legend {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 2px solid;
+}
+
+.node-legend.person {
+    background-color: #ff6b6b;
+    border-color: #e55353;
+}
+
+.node-legend.company {
+    background-color: #4ecdc4;
+    border-color: #45b7aa;
+}
+
+.node-legend.platform {
+    background-color: #45b7d1;
+    border-color: #3a9bc1;
+}
+
+.node-legend.topic {
+    background-color: #96ceb4;
+    border-color: #85b8a3;
+}
+
+.edge-legend {
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    margin-right: 8px;
+    border-radius: 1px;
+}
+
+.edge-legend.ownership {
+    background-color: #ff6b6b;
+}
+
+.edge-legend.leadership {
+    background-color: #4ecdc4;
+}
+
+.edge-legend.involvement {
+    background-color: #45b7d1;
+}
+
+.edge-legend.influence {
+    background-color: #96ceb4;
+}
+
+/* Table styling */
+.table th {
+    font-weight: 600;
+    font-size: 0.85em;
+}
+
+.table td {
+    font-size: 0.85em;
+}
+
+.sentiment-positive {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.sentiment-negative {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.sentiment-neutral {
+    color: #6c757d;
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .graph-container {
+        height: 50vh;
+        min-height: 400px;
+    }
+    
+    .graph-controls {
+        padding: 1rem !important;
+    }
+    
+    .graph-controls .row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .graph-controls .text-end {
+        text-align: start !important;
+    }
+    
+    .node-label {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-group .btn {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1rem;
+    }
+    
+    .card-header h5 {
+        font-size: 1rem;
+    }
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.zoom-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+
+/* Status indicators */
+.connection-status {
+    font-size: 0.85em;
+}
+
+.status-connected {
+    color: #28a745;
+}
+
+.status-disconnected {
+    color: #dc3545;
+}
+
+.status-connecting {
+    color: #ffc107;
+}
+
+/* Loading and error states */
+#loading-indicator {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.metadata-badge {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    display: inline-block;
+}
