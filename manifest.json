@@ -1,0 +1,24 @@
+{
+  "name": "Musk vs Trump - AI Reputation Tracker",
+  "short_name": "MuskVsTrump",
+  "description": "Track and visualize public figure reputation through AI-powered sentiment analysis with interactive 3D graphs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "categories": ["news", "social", "analytics"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiBmaWxsPSIjMGYxNzJhIi8+CjxjaXJjbGUgY3g9Ijc2IiBjeT0iNzYiIHI9IjI0IiBmaWxsPSIjMjU2M2ViIi8+CjxjaXJjbGUgY3g9IjExNiIgY3k9Ijc2IiByPSIyNCIgZmlsbD0iI2VmNDQ0NCIvPgo8cGF0aCBkPSJNNDggMTIwTDE0NCAxMjAiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik05NiA0OEw5NiAxNDQiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjwvc3ZnPgo=",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjMGYxNzJhIi8+CjxjaXJjbGUgY3g9IjIwNCIgY3k9IjIwNCIgcj0iNjQiIGZpbGw9IiMyNTYzZWIiLz4KPGNpcmNsZSBjeD0iMzA4IiBjeT0iMjA0IiByPSI2NCIgZmlsbD0iI2VmNDQ0NCIvPgo8cGF0aCBkPSJNMTI4IDMyMEwzODQgMzIwIiBzdHJva2U9IiM2NDc0OGIiIHN0cm9rZS13aWR0aD0iOCIvPgo8cGF0aCBkPSJNMjU2IDEyOEwyNTYgMzg0IiBzdHJva2U9IiM2NDc0OGIiIHN0cm9rZS13aWR0aD0iOCIvPgo8L3N2Zz4K",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

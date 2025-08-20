@@ -1,0 +1,91 @@
+[build]
+  # Build command - not needed for static site
+  command = ""
+  
+  # Directory to deploy (root directory contains index.html)
+  publish = "."
+  
+[build.environment]
+  # Node version for build environment
+  NODE_VERSION = "18"
+
+[[headers]]
+  # Apply headers to all files
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Performance headers
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  # Specific headers for HTML files
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  # Headers for CSS and JS files
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Redirect rules
+[[redirects]]
+  # Redirect backend API calls to the Flask backend (if deployed separately)
+  from = "/api/*"
+  to = "https://your-backend-url.herokuapp.com/api/:splat"
+  status = 200
+  force = true
+  
+[[redirects]]
+  # SPA fallback - redirect all other routes to index.html
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Form handling (if forms are added later)
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = false
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+# Environment variables (for future use)
+[context.production.environment]
+  ENVIRONMENT = "production"
+  
+[context.deploy-preview.environment]
+  ENVIRONMENT = "preview"
+  
+[context.branch-deploy.environment]
+  ENVIRONMENT = "development"
+
+# Plugin configuration
+[[plugins]]
+  # Optional: Lighthouse plugin for performance monitoring
+  package = "@netlify/plugin-lighthouse"
+  
+  [plugins.inputs.audits]
+    output_path = "reports/lighthouse.html"
+    
+[[plugins]]
+  # Optional: Bundle analyzer
+  package = "netlify-plugin-bundle-analyzer"
