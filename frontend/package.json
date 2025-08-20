@@ -1,0 +1,44 @@
+{
+  "name": "musk-vs-trump-frontend",
+  "version": "1.0.0",
+  "description": "Frontend application for the Musk vs Trump AI reputation tracker with 3D visualization",
+  "main": "index.js",
+  "homepage": "https://hannesmitterer.github.io/musk_vs_trump/",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "keywords": ["reputation", "ai", "sentiment", "analysis", "3d", "visualization"],
+  "author": "hannesmitterer",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "three": "^0.158.0",
+    "@react-three/fiber": "^8.15.11",
+    "@react-three/drei": "^9.92.7",
+    "plotly.js-dist": "^2.27.0",
+    "react-plotly.js": "^2.6.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

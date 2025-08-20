@@ -1,0 +1,440 @@
+/* ReputationGraph Component Styles */
+.reputation-graph-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.loading-state .loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem auto;
+}
+
+.loading-state h3 {
+  color: #2d3748;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.loading-state p {
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+/* Error State */
+.error-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.error-state h3 {
+  color: #e53e3e;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.error-state p {
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+.retry-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Controls Panel */
+.controls-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.control-label {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #4a5568;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.control-button:hover {
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateY(-1px);
+}
+
+.control-button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.status-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.connection-status.connected {
+  background: rgba(72, 187, 120, 0.1);
+  color: #2f855a;
+  border: 1px solid rgba(72, 187, 120, 0.3);
+}
+
+.connection-status.disconnected {
+  background: rgba(237, 137, 54, 0.1);
+  color: #c05621;
+  border: 1px solid rgba(237, 137, 54, 0.3);
+}
+
+.connection-status .status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.connection-status.connected .status-dot {
+  background: #48bb78;
+}
+
+.connection-status.disconnected .status-dot {
+  background: #ed8936;
+}
+
+.update-info {
+  font-size: 0.85rem;
+  color: #718096;
+  background: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Graph Container */
+.graph-container {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+/* Plotly overrides */
+.graph-container .js-plotly-plot .plotly .modebar {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 8px !important;
+  margin: 10px !important;
+  padding: 4px !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.graph-container .js-plotly-plot .plotly .modebar-btn {
+  border-radius: 4px !important;
+}
+
+.graph-container .js-plotly-plot .plotly .modebar-btn:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+}
+
+/* Logs Panel */
+.logs-panel {
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logs-header h3 {
+  color: #2d3748;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.logs-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.refresh-button {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.refresh-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.refresh-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.logs-container {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.logs-list {
+  padding: 1rem;
+}
+
+.log-entry {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: white;
+  border-radius: 8px;
+  border-left: 4px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.log-entry:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.log-entry.info {
+  border-left-color: #3182ce;
+}
+
+.log-entry.success {
+  border-left-color: #38a169;
+}
+
+.log-entry.warning {
+  border-left-color: #d69e2e;
+}
+
+.log-entry.error {
+  border-left-color: #e53e3e;
+}
+
+.log-timestamp {
+  font-size: 0.8rem;
+  color: #718096;
+  font-weight: 500;
+  white-space: nowrap;
+  background: #edf2f7;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.log-message {
+  flex: 1;
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.log-sentiment {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.log-sentiment.positive {
+  background: rgba(72, 187, 120, 0.1);
+  color: #2f855a;
+}
+
+.log-sentiment.negative {
+  background: rgba(229, 62, 62, 0.1);
+  color: #c53030;
+}
+
+.no-logs {
+  padding: 2rem;
+  text-align: center;
+  color: #718096;
+}
+
+/* Scrollbar Styling */
+.logs-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.logs-container::-webkit-scrollbar-track {
+  background: #edf2f7;
+}
+
+.logs-container::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.logs-container::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .reputation-graph-container {
+    padding: 1rem;
+  }
+
+  .controls-panel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .control-group {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .control-buttons {
+    flex-wrap: wrap;
+  }
+
+  .status-info {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .graph-container {
+    overflow-x: auto;
+  }
+
+  .logs-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .logs-controls {
+    justify-content: center;
+  }
+
+  .log-entry {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .log-timestamp {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .control-button {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+/* Animation for new log entries */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.log-entry {
+  animation: slideInRight 0.3s ease-out;
+}

@@ -40,6 +40,14 @@ yarn-error.log*
 .npm
 .yarn-integrity
 
+# Frontend build artifacts
+frontend/build/
+frontend/node_modules/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
 # IDE
 .vscode/
 .idea/
@@ -55,3 +63,6 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Playwright screenshots
+/tmp/playwright-mcp-output/
