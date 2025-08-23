@@ -1,10 +1,10 @@
 import React from 'react';
-import MobileDeployButton from './MobileDeployButton';
+import DeployButton from './components/DeployButton';
 
 function App() {
   return (
     <div>
-      <MobileDeployButton />
+      <DeployButton />
       {/* Existing content goes here */}
     </div>
   );

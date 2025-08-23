@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function isMobile() {
   return /Mobi|Android/i.test(navigator.userAgent);
@@ -6,8 +6,15 @@ function isMobile() {
 
 const netlifyDeployUrl = "https://app.netlify.com/start/deploy?repository=https://github.com/hannesmitterer/musk_vs_trump";
 
-export default function MobileDeployButton() {
-  if (!isMobile()) return null;
+export default function DeployButton() {
+  // Auto-deploy behavior for desktop users
+  useEffect(() => {
+    if (!isMobile()) {
+      // For desktop users, we could add auto-deploy logic here if needed
+      // For now, we just ensure the button is always visible
+      console.log('Deploy button available for desktop users');
+    }
+  }, []);
 
   return (
     <div style={{
@@ -20,7 +27,7 @@ export default function MobileDeployButton() {
       top: 0,
       zIndex: 1000
     }}>
-      <h3>🚀 One-Tap Mobile Deploy</h3>
+      <h3>🚀 {isMobile() ? 'One-Tap Mobile Deploy' : 'Quick Deploy'}</h3>
       <a
         href={netlifyDeployUrl}
         target="_blank"
@@ -38,11 +45,13 @@ export default function MobileDeployButton() {
           fontWeight: 'bold'
         }}
       >
-        Setup & Run Mobile Site
+        {isMobile() ? 'Setup & Run Mobile Site' : 'Deploy Your Site'}
       </a>
       <div style={{marginTop: '1em', fontSize: '0.95em'}}>
         <span>
-          Instantly deploy your own live static mobile site—no login or setup needed!
+          {isMobile() 
+            ? 'Instantly deploy your own live static mobile site—no login or setup needed!'
+            : 'Instantly deploy your own live static site—no login or setup needed! Works seamlessly on both desktop and mobile.'}
         </span>
       </div>
     </div>
