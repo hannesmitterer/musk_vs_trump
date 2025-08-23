@@ -1,7 +1,20 @@
 import React from 'react';
 
 function isMobile() {
-  return /Mobi|Android/i.test(navigator.userAgent);
+  // For development, we can also check for a specific viewport width
+  const isMobileUserAgent = /Mobi|Android/i.test(navigator.userAgent);
+  const isMobileViewport = window.innerWidth <= 768; // Tablets and below
+  
+  // Debug logging
+  console.log('Mobile detection:', {
+    userAgent: navigator.userAgent,
+    isMobileUserAgent,
+    windowWidth: window.innerWidth,
+    isMobileViewport,
+    finalResult: isMobileUserAgent || isMobileViewport
+  });
+  
+  return isMobileUserAgent || isMobileViewport;
 }
 
 const netlifyDeployUrl = "https://app.netlify.com/start/deploy?repository=https://github.com/hannesmitterer/musk_vs_trump";
