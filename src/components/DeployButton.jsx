@@ -1,14 +1,8 @@
 import React from 'react';
 
-function isMobile() {
-  return /Mobi|Android/i.test(navigator.userAgent);
-}
-
 const netlifyDeployUrl = "https://app.netlify.com/start/deploy?repository=https://github.com/hannesmitterer/musk_vs_trump";
 
-export default function MobileDeployButton() {
-  if (!isMobile()) return null;
-
+export default function DeployButton() {
   return (
     <div style={{
       width: '100%',
@@ -20,11 +14,13 @@ export default function MobileDeployButton() {
       top: 0,
       zIndex: 1000
     }}>
-      <h3>🚀 One-Tap Mobile Deploy</h3>
+      <h3>🚀 One-Click Deploy</h3>
       <a
         href={netlifyDeployUrl}
         target="_blank"
         rel="noopener noreferrer"
+        role="button"
+        aria-label="Deploy to Netlify - one-click setup"
         style={{
           display: 'inline-block',
           fontSize: '1.2em',
@@ -38,11 +34,11 @@ export default function MobileDeployButton() {
           fontWeight: 'bold'
         }}
       >
-        Setup & Run Mobile Site
+        Deploy to Netlify
       </a>
       <div style={{marginTop: '1em', fontSize: '0.95em'}}>
         <span>
-          Instantly deploy your own live static mobile site—no login or setup needed!
+          Instantly deploy your own live static site—no login or setup needed!
         </span>
       </div>
     </div>
