@@ -2,6 +2,12 @@
 
 This project tracks and analyzes the reputation of public figures through AI-powered sentiment analysis.
 
+## 🚀 Live Demo
+
+**View the live application:** [https://hannesmitterer.github.io/musk_vs_trump](https://hannesmitterer.github.io/musk_vs_trump)
+
+The reputation graph is automatically displayed on the homepage, showing real-time sentiment analysis and reputation trends for public figures. The site is automatically deployed to GitHub Pages whenever changes are pushed to the main branch.
+
 ## Project Structure
 
 ```
@@ -75,7 +81,41 @@ If you prefer to set up the backend manually:
 - Python 3.x
 - pip (Python package manager)
 
-## Development
+## Frontend Development
+
+The frontend is a React application that displays an interactive reputation graph showing sentiment analysis trends.
+
+### Quick Start
+
+1. **View the live site:** [https://hannesmitterer.github.io/musk_vs_trump](https://hannesmitterer.github.io/musk_vs_trump)
+2. The graph loads instantly on the homepage - no setup required!
+
+### Local Development
+
+```bash
+# Install frontend dependencies
+npm install
+
+# Start development server
+npm start
+# App runs at http://localhost:3000/musk_vs_trump
+
+# Build for production
+npm run build
+```
+
+### Deployment
+
+- **Automated:** Every push to `main` branch automatically deploys to GitHub Pages via GitHub Actions
+- **Manual:** Run `npm run deploy` to manually deploy to GitHub Pages
+- The site is publicly accessible at the GitHub Pages URL above
+
+### Frontend Features
+
+- 📊 Interactive reputation graph using Recharts
+- 📱 Mobile-responsive design with deployment button
+- ⚡ Fast loading with optimized React build
+- 🚀 Automatic deployment pipeline
 
 ### Backend Development
 

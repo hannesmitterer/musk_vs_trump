@@ -1,10 +1,19 @@
 # Frontend Setup
 
-This directory contains the frontend application for the Musk vs Trump AI reputation tracker.
+This directory contains documentation for the frontend application for the Musk vs Trump AI reputation tracker.
+
+**Note:** The main React application is now located in the project root directory, not in this `frontend/` folder.
+
+## Quick Access
+
+- **Live Site:** [https://hannesmitterer.github.io/musk_vs_trump](https://hannesmitterer.github.io/musk_vs_trump)
+- **Source Code:** React components are in the `/src` directory
+- **Main Component:** `App.jsx` - Contains the homepage with reputation graph
+- **Graph Component:** `ReputationGraph.jsx` - Interactive chart display
 
 ## Development Setup
 
-To get the frontend development server running, follow these steps:
+To work on the frontend, navigate to the project root directory and follow these steps:
 
 ### Prerequisites
 
@@ -13,9 +22,9 @@ To get the frontend development server running, follow these steps:
 
 ### Setup Instructions
 
-1. **Navigate to the frontend directory:**
+1. **Navigate to the project root directory:**
    ```bash
-   cd frontend
+   cd ../  # Go back to project root
    ```
 
 2. **Install Node.js dependencies:**
@@ -28,13 +37,32 @@ To get the frontend development server running, follow these steps:
    npm start
    ```
 
-The development server will start and the application will be available at `http://localhost:3000` (or another port if 3000 is already in use).
+The development server will start and the application will be available at `http://localhost:3000/musk_vs_trump`.
 
 ## File Structure
 
-- `App.js` - Main application component
-- `ReputationGraph.js` - Component for displaying reputation graphs
+The React application structure is:
+
+```
+/src
+├── App.jsx                    # Main application component with reputation graph
+├── index.js                   # React app entry point
+└── components/
+    ├── ReputationGraph.jsx    # Interactive reputation chart component
+    └── MobileDeployButton.jsx # Mobile deployment utility
+/public
+└── index.html                 # HTML template
+```
+
+## Automated Deployment
+
+The frontend automatically deploys to GitHub Pages when changes are pushed to the main branch. The deployment is handled by GitHub Actions in `.github/workflows/deploy.yml`.
 
 ## Contributing
 
-For new contributors, make sure to follow the setup instructions above before making any changes to the frontend code.
+The frontend displays a reputation graph immediately on load. To modify the graph:
+
+1. Edit `src/components/ReputationGraph.jsx` for chart customization
+2. Update `src/App.jsx` for overall page layout
+3. Test locally with `npm start`
+4. Push to main branch for automatic deployment
