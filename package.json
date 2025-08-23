@@ -1,0 +1,18 @@
+{
+  "name": "musk-vs-trump-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Musk vs Trump AI reputation tracker",
+  "main": "src/App.jsx",
+  "scripts": {
+    "test": "echo \"No tests available yet\"",
+    "start": "echo \"No build setup available yet\""
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {},
+  "keywords": ["react", "netlify", "deploy"],
+  "author": "hannesmitterer",
+  "license": "MIT"
+}
