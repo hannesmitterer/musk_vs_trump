@@ -32,13 +32,21 @@ ENV/
 env.bak/
 venv.bak/
 
-# Node.js
+# Node.js (for development tools only)
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .npm
 .yarn-integrity
+package-lock.json
+yarn.lock
+
+# Build artifacts (React/build tools - not used in static version)
+build/
+dist/
+.next/
+out/
 
 # IDE
 .vscode/
@@ -55,3 +63,13 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Temporary files
+tmp/
+.tmp
+*.tmp
+*.temp
+
+# Logs
+logs
+*.log
