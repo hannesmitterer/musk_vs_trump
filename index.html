@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musk vs Trump - AI Reputation Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Mobile Deploy Button -->
+    <div id="mobile-deploy-banner" class="mobile-deploy-banner hidden">
+        <h3>🚀 One-Tap Mobile Deploy</h3>
+        <a href="https://app.netlify.com/start/deploy?repository=https://github.com/hannesmitterer/musk_vs_trump" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="deploy-button">
+            Setup & Run Mobile Site
+        </a>
+        <div class="deploy-description">
+            Instantly deploy your own live static mobile site—no login or setup needed!
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <header class="header">
+            <h1>🤖 Musk vs Trump</h1>
+            <h2>AI Reputation Tracker</h2>
+            <p>Track and analyze public figure reputations through AI-powered sentiment analysis</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Voting Section -->
+            <section class="voting-section">
+                <h3>📊 Cast Your Vote</h3>
+                <div class="vote-options">
+                    <div class="candidate-card">
+                        <div class="candidate-info">
+                            <h4>🚀 Elon Musk</h4>
+                            <div class="vote-count">
+                                <span class="count" id="musk-votes">0</span>
+                                <span class="label">votes</span>
+                            </div>
+                        </div>
+                        <button class="vote-btn" onclick="vote('musk')" data-candidate="musk">
+                            Vote for Musk
+                        </button>
+                    </div>
+                    
+                    <div class="vs-divider">VS</div>
+                    
+                    <div class="candidate-card">
+                        <div class="candidate-info">
+                            <h4>🇺🇸 Donald Trump</h4>
+                            <div class="vote-count">
+                                <span class="count" id="trump-votes">0</span>
+                                <span class="label">votes</span>
+                            </div>
+                        </div>
+                        <button class="vote-btn" onclick="vote('trump')" data-candidate="trump">
+                            Vote for Trump
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="vote-results">
+                    <div class="progress-bar">
+                        <div class="musk-bar" id="musk-bar" style="width: 50%"></div>
+                        <div class="trump-bar" id="trump-bar" style="width: 50%"></div>
+                    </div>
+                    <div class="total-votes">
+                        Total votes: <span id="total-votes">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reputation Graph Section -->
+            <section class="reputation-section">
+                <h3>📈 Reputation Trends</h3>
+                <div class="graph-container">
+                    <div class="reputation-graph" id="reputation-graph">
+                        <div class="graph-placeholder">
+                            <p>📊 AI-powered sentiment analysis graph will appear here</p>
+                            <p class="note">Connect to backend API for live data</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reputation-stats">
+                    <div class="stat-card">
+                        <h4>Musk Sentiment</h4>
+                        <div class="sentiment-score" id="musk-sentiment">
+                            <span class="score">75%</span>
+                            <span class="trend positive">↗</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Trump Sentiment</h4>
+                        <div class="sentiment-score" id="trump-sentiment">
+                            <span class="score">68%</span>
+                            <span class="trend negative">↘</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Links Section -->
+            <section class="links-section">
+                <h3>🔗 Quick Links</h3>
+                <div class="links-grid">
+                    <a href="https://github.com/hannesmitterer/musk_vs_trump" class="link-card" target="_blank">
+                        <div class="link-icon">🐙</div>
+                        <div class="link-content">
+                            <h4>GitHub Repository</h4>
+                            <p>View source code and contribute</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://app.netlify.com/start/deploy?repository=https://github.com/hannesmitterer/musk_vs_trump" 
+                       class="link-card" target="_blank">
+                        <div class="link-icon">🚀</div>
+                        <div class="link-content">
+                            <h4>Deploy Your Own</h4>
+                            <p>One-click deployment on Netlify</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="link-card" onclick="showAbout()">
+                        <div class="link-icon">ℹ️</div>
+                        <div class="link-content">
+                            <h4>About Project</h4>
+                            <p>Learn more about AI sentiment analysis</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="link-card" onclick="resetVotes()">
+                        <div class="link-icon">🔄</div>
+                        <div class="link-content">
+                            <h4>Reset Votes</h4>
+                            <p>Clear all voting data</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>🤖 Powered by AI sentiment analysis | Built with ❤️ for transparency in public discourse</p>
+            <p class="tech-note">Static site version - deployed via GitHub Pages</p>
+        </footer>
+    </div>
+
+    <!-- Modal for About -->
+    <div id="about-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="hideAbout()">&times;</span>
+            <h2>About Musk vs Trump AI Reputation Tracker</h2>
+            <p>This project tracks and analyzes the reputation of public figures through AI-powered sentiment analysis.</p>
+            <p>Features:</p>
+            <ul>
+                <li>📊 Real-time voting system</li>
+                <li>🤖 AI-powered sentiment analysis</li>
+                <li>📈 Reputation trend tracking</li>
+                <li>📱 Mobile-first responsive design</li>
+                <li>🚀 One-click deployment</li>
+            </ul>
+            <p>This static version provides core voting functionality and can be extended with backend integration for real-time AI analysis.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
