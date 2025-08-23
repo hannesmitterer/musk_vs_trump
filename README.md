@@ -110,6 +110,16 @@ npm run build
 - **Manual:** Run `npm run deploy` to manually deploy to GitHub Pages
 - The site is publicly accessible at the GitHub Pages URL above
 
+#### GitHub Pages Setup Required
+
+To enable the deployment, the repository owner needs to:
+
+1. Go to repository Settings → Pages
+2. Set Source to "GitHub Actions"
+3. The workflow will automatically deploy on the next push to main
+
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) handles the entire build and deployment process automatically.
+
 ### Frontend Features
 
 - 📊 Interactive reputation graph using Recharts
