@@ -1,0 +1,21 @@
+{
+  "name": "musk-vs-trump-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Musk vs Trump AI reputation tracker",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "serve": "python3 -m http.server 3000"
+  },
+  "keywords": [
+    "reputation",
+    "tracker",
+    "3d",
+    "threejs"
+  ],
+  "author": "Musk vs Trump Project",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.158.0"
+  }
+}
