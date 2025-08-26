@@ -173,7 +173,8 @@ class ReputationTracker {
         // Handle window resize for charts
         window.addEventListener('resize', () => {
             if (reputationChart) reputationChart.resize();
-            if (sentimentChart) sentimentChart.resize();
+            if (window.reputationChart) window.reputationChart.resize();
+            if (window.sentimentChart) window.sentimentChart.resize();
         });
 
         console.log('Event listeners set up');
