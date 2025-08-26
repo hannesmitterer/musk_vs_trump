@@ -1,0 +1,25 @@
+name: "Musk vs Trump - AI Reputation Tracker"
+description: "Real-time reputation tracking and sentiment analysis dashboard"
+theme: jekyll-theme-minimal
+
+# GitHub Pages configuration
+plugins:
+  - jekyll-sitemap
+
+# Site settings
+title: "Musk vs Trump AI Tracker"
+author: "AI Reputation Tracker Team"
+url: "https://hannesmitterer.github.io"
+baseurl: "/musk_vs_trump"
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - backend/
+  - frontend/README.md
+  - info-project.txt
+  - pyproject.toml
+
+# Custom settings
+google_analytics: false
+show_downloads: false
