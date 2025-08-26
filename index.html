@@ -1,12 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Musk vs Trump</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musk vs Trump - AI Reputation Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #app {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .scores-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            max-width: 90vw;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .score-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .score-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .score-trend {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .trend-up {
+            color: #4ade80;
+        }
+
+        .trend-down {
+            color: #f87171;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 1.5rem;
+        }
+
+        .error {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 1.2rem;
+            color: #f87171;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .scores-container {
+                bottom: 10px;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .score-card {
+                min-width: 120px;
+                padding: 10px;
+            }
+
+            .score-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to Musk vs Trump</h1>
-  <p>This is the initial GitHub Pages deployment.</p>
+    <div id="app">
+        <div id="canvas-container"></div>
+        <div id="ui-overlay">
+            <div class="header">
+                <h1>🚀 Musk vs Trump</h1>
+                <p>AI-Powered Reputation Tracker</p>
+            </div>
+            <div id="scores" class="scores-container" style="display: none;">
+                <!-- Score cards will be populated by JavaScript -->
+            </div>
+            <div id="loading" class="loading">
+                Loading reputation data...
+            </div>
+            <div id="error" class="error" style="display: none;">
+                Unable to load reputation data
+            </div>
+        </div>
+    </div>
+
+    <!-- App and ReputationGraph components -->
+    <script src="App.js"></script>
+    <script src="ReputationGraph.js"></script>
+    
+    <script>
+        // Initialize the application when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const app = new App();
+            app.init();
+        });
+    </script>
 </body>
 </html>
