@@ -217,7 +217,7 @@ let app;
 // Start the application
 document.addEventListener('DOMContentLoaded', () => {
     app = new ReputationTracker();
-});
+app = new ReputationTracker();
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', () => {
