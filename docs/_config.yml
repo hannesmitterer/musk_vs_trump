@@ -1,16 +1,16 @@
+# GitHub Pages configuration for Musk vs Trump AI Reputation Tracker
 name: "Musk vs Trump - AI Reputation Tracker"
 description: "Real-time reputation tracking and sentiment analysis dashboard"
-theme: jekyll-theme-minimal
-
-# GitHub Pages configuration
-plugins:
-  - jekyll-sitemap
-
-# Site settings
 title: "Musk vs Trump AI Tracker"
 author: "AI Reputation Tracker Team"
+
+# Site URL configuration
 url: "https://hannesmitterer.github.io"
 baseurl: "/musk_vs_trump"
+
+# GitHub Pages deployment settings
+# This is a static HTML site, no Jekyll theme needed
+# The site uses vanilla HTML/CSS/JS for optimal performance
 
 # Exclude files from processing
 exclude:
@@ -19,7 +19,13 @@ exclude:
   - frontend/README.md
   - info-project.txt
   - pyproject.toml
+  - .gitignore
+  - "*.md"
 
-# Custom settings
+# Custom settings for GitHub Pages
 google_analytics: false
 show_downloads: false
+
+# Ensure proper MIME types and fast loading
+include:
+  - .htaccess

@@ -2,6 +2,8 @@
 
 This project tracks and analyzes the reputation of public figures through AI-powered sentiment analysis.
 
+🌐 **Live Demo**: [View Dashboard on GitHub Pages](https://hannesmitterer.github.io/musk_vs_trump/)
+
 ## Project Structure
 
 ```
@@ -98,6 +100,22 @@ The backend includes two automation options:
 
 1. Add your package to `backend/requirements.txt`
 2. Run `./start_backend.sh` to automatically install new dependencies
+
+## Frontend Dashboard
+
+The project includes a live web dashboard deployed via GitHub Pages:
+
+- **Live URL**: https://hannesmitterer.github.io/musk_vs_trump/
+- **Source**: `/docs` folder contains the complete static site
+- **Features**: Responsive design, interactive charts, real-time metrics display
+- **Technology**: Pure HTML/CSS/JavaScript with Chart.js integration
+
+### Local Development
+```bash
+cd docs
+python3 -m http.server 8000
+# Visit http://localhost:8000
+```
 
 ## Troubleshooting
 
