@@ -99,12 +99,79 @@ The backend includes two automation options:
 1. Add your package to `backend/requirements.txt`
 2. Run `./start_backend.sh` to automatically install new dependencies
 
+## Frontend Deployment
+
+### GitHub Pages Live Site
+
+🌐 **Live Demo**: [https://hannesmitterer.github.io/musk_vs_trump/](https://hannesmitterer.github.io/musk_vs_trump/)
+
+The frontend dashboard is automatically deployed to GitHub Pages using GitHub Actions.
+
+### Deployment Configuration
+
+#### Automatic Deployment
+- ✅ **Automated via GitHub Actions** (`.github/workflows/gh-pages.yml`)
+- 📁 **Deploys from `docs/` directory** on main branch
+- 🚀 **Live updates** within 2-3 minutes of push to main
+- 🔄 **Includes all static assets** (HTML, CSS, JS, images)
+
+#### Manual Deployment Setup
+If setting up GitHub Pages manually:
+
+1. **Repository Settings → Pages**
+2. **Source**: Deploy from a branch
+3. **Branch**: `main` 
+4. **Folder**: `/docs`
+5. **Save settings**
+
+#### Custom Domain (Optional)
+To use a custom domain:
+
+1. **Add CNAME file** to `docs/` directory:
+   ```
+   your-custom-domain.com
+   ```
+2. **Configure DNS** with your domain provider
+3. **Enable HTTPS** in repository settings
+
+### Local Development
+
+#### Testing the Frontend Locally
+```bash
+# Serve the docs/ directory locally
+cd docs
+python3 -m http.server 8000
+# Visit http://localhost:8000
+```
+
+#### File Structure
+```
+docs/
+├── index.html      # Main HTML page
+├── styles.css      # Responsive CSS styles  
+├── app.js          # Main application logic
+├── charts.js       # Chart.js configuration
+├── data.js         # Mock data and data management
+├── _config.yml     # Jekyll configuration for GitHub Pages
+└── README.md       # Frontend documentation
+```
+
+### Site Features
+- 📊 **Interactive Charts** using Chart.js
+- 📱 **Responsive Design** for all device sizes
+- ⚡ **Real-time Updates** every 30 seconds
+- 🎨 **Modern UI** with glassmorphism effects
+- 📈 **Sentiment Analysis** visualization
+- 🚀 **Performance Optimized** static site
+
 ## Troubleshooting
 
 - **Python not found**: Ensure Python 3.x is installed and available in your PATH
 - **Permission denied**: Make sure `start_backend.sh` is executable (`chmod +x start_backend.sh`)
 - **Module import errors**: Verify all dependencies are installed via `requirements.txt`
 - **Database errors**: Ensure `db_manager.py` exists and has a `create_tables()` function
+- **GitHub Pages not updating**: Check Actions tab for deployment status
+- **Site not loading**: Verify all assets use relative paths in `docs/index.html`
 
 ## License
 
