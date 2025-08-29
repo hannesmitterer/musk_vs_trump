@@ -1,0 +1,43 @@
+{
+  "name": "musk-vs-trump-ai-tracker",
+  "version": "1.0.0",
+  "description": "AI-powered reputation tracker for Musk vs Trump with real-time sentiment analysis",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'No build step needed for static site'",
+    "test": "echo 'No tests specified'"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "ai",
+    "reputation",
+    "tracker",
+    "sentiment-analysis",
+    "musk",
+    "trump",
+    "dashboard",
+    "real-time",
+    "visualization"
+  ],
+  "author": "Musk vs Trump Project",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hannesmitterer/musk_vs_trump.git"
+  },
+  "homepage": "https://hannesmitterer.github.io/musk_vs_trump/",
+  "bugs": {
+    "url": "https://github.com/hannesmitterer/musk_vs_trump/issues"
+  }
+}
