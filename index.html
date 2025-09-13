@@ -4,18 +4,633 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Musk vs Trump - AI Reputation Tracker</title>
-    <!-- (CSS and HTML content as above) -->
+    <meta name="description" content="Real-time AI-powered reputation tracking for Elon Musk and Donald Trump">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #1DA1F2, #FF4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+        }
+
+        .status-dot.offline {
+            background: #ef4444;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        /* Reputation Cards */
+        .reputation-section {
+            margin-bottom: 60px;
+        }
+
+        .reputation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .reputation-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reputation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .reputation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--accent-color);
+        }
+
+        .reputation-card.musk {
+            --accent-color: #1DA1F2;
+        }
+
+        .reputation-card.trump {
+            --accent-color: #FF4444;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .person-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            background: rgba(74, 222, 128, 0.2);
+            color: #16a34a;
+        }
+
+        .trend-down {
+            background: rgba(248, 113, 113, 0.2);
+            color: #dc2626;
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score-value {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .score-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Loading and Error States */
+        .loading-state, .error-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+
+        .info-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .info-section p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(103, 126, 234, 0.1);
+            border-radius: 10px;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .logo h1 {
+                font-size: 2rem;
+            }
+
+            .reputation-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .reputation-card {
+                padding: 20px;
+            }
+
+            .score-value {
+                font-size: 3rem;
+            }
+
+            .info-section {
+                padding: 25px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .main-content {
+                padding: 20px 0;
+            }
+
+            .reputation-card {
+                padding: 15px;
+            }
+
+            .score-value {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
-        <!-- (Body content as above) -->
-    </div>
-    <script src="App.js"></script>
-    <script src="ReputationGraph.js"></script>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🚀 Musk vs Trump</h1>
+                    <div class="subtitle">AI-Powered Reputation Tracker</div>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Connecting...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="loading-spinner"></div>
+                <h2>Loading Reputation Data...</h2>
+                <p>Fetching the latest AI-powered reputation scores</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="error-state hidden">
+                <h2>⚠️ Connection Error</h2>
+                <p class="error-message">Unable to connect to the live data feed</p>
+                <p>Showing demo data. The tracker will retry automatically.</p>
+                <button onclick="window.location.reload()" style="background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Retry</button>
+            </div>
+
+            <!-- Reputation Cards -->
+            <section id="reputationSection" class="reputation-section hidden">
+                <div class="reputation-grid" id="reputationGrid">
+                    <!-- Reputation cards will be inserted here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section">
+                <h2>About the Reputation Tracker</h2>
+                <p>This AI-powered tool provides real-time reputation monitoring for public figures by analyzing social media sentiment, news coverage, and public opinion data.</p>
+                <p>Reputation scores are calculated using advanced machine learning algorithms that process thousands of data points to provide accurate, up-to-date reputation metrics.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <span class="feature-icon">🤖</span>
+                        <span>AI-Powered Analysis</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📊</span>
+                        <span>Real-time Data</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📱</span>
+                        <span>Mobile Responsive</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🔄</span>
+                        <span>Live Updates</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Musk vs Trump AI Reputation Tracker</p>
+            <p>Powered by advanced sentiment analysis and machine learning</p>
+            <p><a href="https://github.com/hannesmitterer/musk_vs_trump" target="_blank">View on GitHub</a></p>
+        </div>
+    </footer>
+
     <script>
+        // Musk vs Trump Reputation Tracker
+        // For GitHub Pages deployment:
+        // 1. Update the HTTPS URL below to point to your deployed backend
+        // 2. Or remove the backend integration to use mock data only
+        
+        class ReputationTracker {
+            constructor() {
+                // Try localhost first for development, fallback to HTTPS for production
+                this.apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                    ? 'http://localhost:5000/api/reputation'
+                    : 'https://your-backend-domain.com/api/reputation'; // Update this when deploying
+                this.isOnline = false;
+                this.updateInterval = null;
+                this.retryCount = 0;
+                this.maxRetries = 3;
+            }
+
+            async init() {
+                console.log('🚀 Initializing Musk vs Trump Reputation Tracker...');
+                
+                // Show loading state
+                this.showLoading();
+                
+                // Try to load data
+                await this.loadData();
+                
+                // Start periodic updates if online
+                if (this.isOnline) {
+                    this.startPeriodicUpdates();
+                }
+            }
+
+            async loadData() {
+                try {
+                    const response = await fetch(this.apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.status !== 'success') {
+                        throw new Error('API returned error status');
+                    }
+
+                    this.handleSuccess(data);
+                    this.retryCount = 0; // Reset retry count on success
+                    
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    this.handleError();
+                }
+            }
+
+            handleSuccess(data) {
+                this.isOnline = true;
+                this.updateStatus(true, 'Live data feed active');
+                this.displayReputationData(data);
+                this.hideLoading();
+                this.hideError();
+                this.showReputation();
+            }
+
+            handleError() {
+                this.isOnline = false;
+                this.updateStatus(false, 'Connection error');
+                
+                if (this.retryCount < this.maxRetries) {
+                    this.retryCount++;
+                    console.log(`Retrying connection... (${this.retryCount}/${this.maxRetries})`);
+                    
+                    // Use mock data while retrying
+                    this.displayMockData();
+                    this.hideLoading();
+                    this.showReputation();
+                    
+                    // Retry after delay
+                    setTimeout(() => this.loadData(), 5000);
+                } else {
+                    // Show error state after max retries
+                    this.displayMockData();
+                    this.hideLoading();
+                    this.showError();
+                    this.showReputation();
+                }
+            }
+
+            displayReputationData(data) {
+                const { musk, trump } = data.data;
+                
+                const reputationGrid = document.getElementById('reputationGrid');
+                reputationGrid.innerHTML = `
+                    <div class="reputation-card musk fade-in">
+                        <div class="card-header">
+                            <div class="person-name">${musk.name}</div>
+                            <div class="trend-indicator trend-${musk.trend}">
+                                ${musk.trend === 'up' ? '↗️' : '↘️'} ${musk.change}%
+                            </div>
+                        </div>
+                        <div class="score-display">
+                            <div class="score-value">${musk.score}</div>
+                            <div class="score-label">Reputation Score</div>
+                            <div class="score-change ${musk.trend === 'up' ? 'trend-up' : 'trend-down'}">
+                                ${musk.trend === 'up' ? '+' : '-'}${musk.change}% from yesterday
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reputation-card trump fade-in">
+                        <div class="card-header">
+                            <div class="person-name">${trump.name}</div>
+                            <div class="trend-indicator trend-${trump.trend}">
+                                ${trump.trend === 'up' ? '↗️' : '↘️'} ${trump.change}%
+                            </div>
+                        </div>
+                        <div class="score-display">
+                            <div class="score-value">${trump.score}</div>
+                            <div class="score-label">Reputation Score</div>
+                            <div class="score-change ${trump.trend === 'up' ? 'trend-up' : 'trend-down'}">
+                                ${trump.trend === 'up' ? '+' : '-'}${trump.change}% from yesterday
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            displayMockData() {
+                // Fallback mock data for when backend is unavailable
+                const mockData = {
+                    data: {
+                        musk: {
+                            name: "Elon Musk",
+                            score: 74.2,
+                            trend: "up",
+                            change: 2.1,
+                            color: "#1DA1F2"
+                        },
+                        trump: {
+                            name: "Donald Trump", 
+                            score: 67.8,
+                            trend: "down",
+                            change: 1.3,
+                            color: "#FF4444"
+                        }
+                    }
+                };
+                this.displayReputationData(mockData);
+            }
+
+            updateStatus(isOnline, message) {
+                const statusDot = document.getElementById('statusDot');
+                const statusText = document.getElementById('statusText');
+                
+                statusDot.className = `status-dot ${isOnline ? '' : 'offline'}`;
+                statusText.textContent = message;
+            }
+
+            showLoading() {
+                document.getElementById('loadingState').classList.remove('hidden');
+            }
+
+            hideLoading() {
+                document.getElementById('loadingState').classList.add('hidden');
+            }
+
+            showError() {
+                document.getElementById('errorState').classList.remove('hidden');
+            }
+
+            hideError() {
+                document.getElementById('errorState').classList.add('hidden');
+            }
+
+            showReputation() {
+                document.getElementById('reputationSection').classList.remove('hidden');
+            }
+
+            startPeriodicUpdates() {
+                // Update every 30 seconds
+                this.updateInterval = setInterval(() => {
+                    this.loadData();
+                }, 30000);
+            }
+
+            destroy() {
+                if (this.updateInterval) {
+                    clearInterval(this.updateInterval);
+                }
+            }
+        }
+
+        // Initialize the app when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            const app = new App();
-            app.init();
+            const tracker = new ReputationTracker();
+            tracker.init();
+            
+            // Clean up on page unload
+            window.addEventListener('beforeunload', () => {
+                tracker.destroy();
+            });
         });
     </script>
 </body>
