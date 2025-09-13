@@ -43,7 +43,7 @@
 [[redirects]]
   # Redirect backend API calls to the Flask backend (if deployed separately)
   from = "/api/*"
-  to = "https://your-backend-url.herokuapp.com/api/:splat"
+  to = "https://example-backend.herokuapp.com/api/:splat"
   status = 200
   force = true
   
