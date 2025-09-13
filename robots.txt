@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://your-site-name.netlify.app/sitemap.xml
+Sitemap: /sitemap.xml
 
 # Optimize crawling
 Crawl-delay: 1
