@@ -237,8 +237,7 @@ class ReputationGraph {
             const material = new THREE.LineBasicMaterial({ 
                 color: personData[0].color,
                 transparent: true,
-                opacity: 0.6,
-                linewidth: 2
+                opacity: 0.6
             });
             
             const line = new THREE.Line(geometry, material);
