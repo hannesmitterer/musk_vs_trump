@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musk vs Trump - Reputation Dashboard</title>
+    <meta name="description" content="Real-time reputation tracking dashboard for Elon Musk vs Donald Trump">
+    
+    <!-- Chart.js Local -->
+    <script src="chart.min.js"></script>
+    
+    <!-- External stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Additional dashboard-specific styles */
+        .main-chart-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .main-chart-section h2 {
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 500px;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-container canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+        
+        .chart-info {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        .metrics-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .metric-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #374151;
+        }
+        
+        .metric-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .musk-color {
+            color: #3b82f6;
+        }
+        
+        .trump-color {
+            color: #ef4444;
+        }
+        
+        .score-change {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .score-change.positive {
+            color: #059669;
+        }
+        
+        .score-change.negative {
+            color: #dc2626;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .main-chart-section {
+                margin: 1rem 0;
+                padding: 1.5rem;
+            }
+            
+            .main-chart-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .chart-container {
+                height: 400px;
+            }
+            
+            .metrics-summary {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-score {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .chart-container {
+                height: 300px;
+            }
+            
+            .main-chart-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <h1>🚀 Musk vs Trump</h1>
+            <p class="subtitle">AI-Powered Reputation Dashboard</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Main Reputation Chart Section -->
+        <section class="main-chart-section">
+            <h2>Historical Reputation Trends</h2>
+            <div class="chart-container">
+                <canvas id="reputationChart"></canvas>
+            </div>
+            <div class="chart-info">
+                📊 Real-time reputation tracking based on social media sentiment and news analysis
+            </div>
+            
+            <!-- Current Metrics Summary -->
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <h3>Elon Musk</h3>
+                    <div class="metric-score musk-color" id="muskScore">--</div>
+                    <div class="score-change" id="muskChange">--</div>
+                    <div class="metric-details">
+                        <small id="muskSentiment">--</small><br>
+                        <small id="muskVolume">--</small>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Donald Trump</h3>
+                    <div class="metric-score trump-color" id="trumpScore">--</div>
+                    <div class="score-change" id="trumpChange">--</div>
+                    <div class="metric-details">
+                        <small id="trumpSentiment">--</small><br>
+                        <small id="trumpVolume">--</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Status and Last Updated -->
+        <div style="text-align: center; margin: 2rem 0; color: rgba(255,255,255,0.8);">
+            <small>Last updated: <span id="lastUpdated">--</span></small>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="charts.js"></script>
+    
+    <script>
+        // Dashboard initialization
+        class Dashboard {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                // Wait for DOM to be fully loaded
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => this.initDashboard());
+                } else {
+                    this.initDashboard();
+                }
+            }
+            
+            initDashboard() {
+                try {
+                    // Wait a bit for Chart.js to load, then initialize
+                    setTimeout(() => {
+                        if (typeof Chart !== 'undefined') {
+                            console.log('Chart.js available, initializing charts');
+                            this.initChart();
+                        } else {
+                            console.log('Chart.js not available, drawing custom chart');
+                            this.drawCustomChart();
+                        }
+                        
+                        // Update metrics display
+                        this.updateMetrics();
+                        
+                        // Set up periodic updates
+                        this.startUpdates();
+                    }, 100);
+                    
+                    console.log('Dashboard initialized successfully');
+                } catch (error) {
+                    console.error('Error initializing dashboard:', error);
+                }
+            }
+            
+            initChart() {
+                // Initialize only the reputation chart for permanent display
+                if (typeof initReputationChart === 'function') {
+                    initReputationChart();
+                }
+            }
+            
+            drawCustomChart() {
+                // Fallback: Draw a simple custom chart if Chart.js fails
+                const canvas = document.getElementById('reputationChart');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas size
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                
+                const width = canvas.width;
+                const height = canvas.height;
+                const padding = 60;
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Get data
+                const dates = mockData.reputationHistory.dates;
+                const muskData = mockData.reputationHistory.musk;
+                const trumpData = mockData.reputationHistory.trump;
+                
+                const maxValue = Math.max(...muskData, ...trumpData);
+                const minValue = Math.min(...muskData, ...trumpData);
+                const range = maxValue - minValue;
+                
+                // Draw background
+                ctx.fillStyle = '#f8fafc';
+                ctx.fillRect(0, 0, width, height);
+                
+                // Draw grid lines
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.lineWidth = 1;
+                
+                // Horizontal grid lines
+                for (let i = 0; i <= 5; i++) {
+                    const y = padding + (height - 2 * padding) * i / 5;
+                    ctx.beginPath();
+                    ctx.moveTo(padding, y);
+                    ctx.lineTo(width - padding, y);
+                    ctx.stroke();
+                }
+                
+                // Vertical grid lines
+                const stepX = (width - 2 * padding) / (dates.length - 1);
+                for (let i = 0; i < dates.length; i += 5) {
+                    const x = padding + stepX * i;
+                    ctx.beginPath();
+                    ctx.moveTo(x, padding);
+                    ctx.lineTo(x, height - padding);
+                    ctx.stroke();
+                }
+                
+                // Helper function to get Y coordinate
+                const getY = (value) => {
+                    return height - padding - ((value - minValue) / range) * (height - 2 * padding);
+                };
+                
+                // Draw Musk line
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                for (let i = 0; i < muskData.length; i++) {
+                    const x = padding + stepX * i;
+                    const y = getY(muskData[i]);
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+                
+                // Draw Trump line
+                ctx.strokeStyle = '#ef4444';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                for (let i = 0; i < trumpData.length; i++) {
+                    const x = padding + stepX * i;
+                    const y = getY(trumpData[i]);
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+                
+                // Draw points for Musk
+                ctx.fillStyle = '#3b82f6';
+                for (let i = 0; i < muskData.length; i++) {
+                    const x = padding + stepX * i;
+                    const y = getY(muskData[i]);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+                
+                // Draw points for Trump
+                ctx.fillStyle = '#ef4444';
+                for (let i = 0; i < trumpData.length; i++) {
+                    const x = padding + stepX * i;
+                    const y = getY(trumpData[i]);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+                
+                // Draw Y-axis labels
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                for (let i = 0; i <= 5; i++) {
+                    const y = padding + (height - 2 * padding) * i / 5;
+                    const value = maxValue - (range * i / 5);
+                    ctx.fillText(value.toFixed(0), padding - 10, y + 4);
+                }
+                
+                // Draw legend
+                ctx.textAlign = 'left';
+                ctx.font = 'bold 14px Arial';
+                
+                // Musk legend
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(padding, 20, 20, 3);
+                ctx.fillText('Elon Musk', padding + 30, 30);
+                
+                // Trump legend
+                ctx.fillStyle = '#ef4444';
+                ctx.fillRect(padding + 150, 20, 20, 3);
+                ctx.fillText('Donald Trump', padding + 180, 30);
+                
+                // Add title
+                ctx.fillStyle = '#1f2937';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Reputation Score Timeline (30 Days)', width / 2, 50);
+            }
+            
+            updateMetrics() {
+                const { musk, trump } = mockData.currentMetrics;
+                
+                // Update Musk metrics
+                document.getElementById('muskScore').textContent = musk.score;
+                document.getElementById('muskChange').textContent = `${musk.change > 0 ? '+' : ''}${musk.change}`;
+                document.getElementById('muskChange').className = `score-change ${musk.change >= 0 ? 'positive' : 'negative'}`;
+                document.getElementById('muskSentiment').textContent = `Sentiment: ${musk.sentiment}`;
+                document.getElementById('muskVolume').textContent = musk.volume;
+                
+                // Update Trump metrics
+                document.getElementById('trumpScore').textContent = trump.score;
+                document.getElementById('trumpChange').textContent = `${trump.change > 0 ? '+' : ''}${trump.change}`;
+                document.getElementById('trumpChange').className = `score-change ${trump.change >= 0 ? 'positive' : 'negative'}`;
+                document.getElementById('trumpSentiment').textContent = `Sentiment: ${trump.sentiment}`;
+                document.getElementById('trumpVolume').textContent = trump.volume;
+                
+                // Update last updated time
+                document.getElementById('lastUpdated').textContent = mockData.lastUpdated;
+            }
+            
+            startUpdates() {
+                // Update data every 30 seconds
+                setInterval(() => {
+                    if (typeof updateMockData === 'function') {
+                        updateMockData();
+                        this.updateMetrics();
+                        if (typeof updateCharts === 'function') {
+                            updateCharts();
+                        } else {
+                            // Redraw custom chart
+                            this.drawCustomChart();
+                        }
+                    }
+                }, 30000);
+            }
+        }
+        
+        // Initialize dashboard
+        new Dashboard();
+    </script>
+</body>
+</html>
