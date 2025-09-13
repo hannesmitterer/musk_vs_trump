@@ -1,5 +1,5 @@
-name: "Musk vs Trump - AI Reputation Tracker"
-description: "Real-time reputation tracking and sentiment analysis dashboard"
+name: "Continent Study: Musk vs Trump"
+description: "A Picasso-inspired continental analysis of global perspectives through AI and artistic interpretation"
 theme: jekyll-theme-minimal
 
 # GitHub Pages configuration
@@ -7,8 +7,8 @@ plugins:
   - jekyll-sitemap
 
 # Site settings
-title: "Musk vs Trump AI Tracker"
-author: "AI Reputation Tracker Team"
+title: "Continent Study: Musk vs Trump"
+author: "Continental Analysis Team"
 url: "https://hannesmitterer.github.io"
 baseurl: "/musk_vs_trump"
 
