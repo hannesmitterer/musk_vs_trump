@@ -1,8 +1,8 @@
 // Mock data for Musk vs Trump reputation tracking
 // This data represents what would come from the backend API
 
-// Generate dates for the last 30 days
-function generateDates(days = 30) {
+// Generate dates for the specified number of days
+function generateDates(days = 90) {
     const dates = [];
     for (let i = days - 1; i >= 0; i--) {
         const date = new Date();
@@ -12,16 +12,18 @@ function generateDates(days = 30) {
     return dates;
 }
 
-// Generate realistic reputation scores with some volatility
-function generateReputationScores(baseScore, volatility = 5, days = 30) {
+// Generate realistic reputation scores with some volatility and trends
+function generateReputationScores(baseScore, volatility = 5, days = 90, trendDirection = 0) {
     const scores = [];
-    let currentScore = baseScore;
+    let currentScore = baseScore + (Math.random() - 0.5) * 10; // Start with some variation
     
     for (let i = 0; i < days; i++) {
         // Add some random walk with mean reversion
         const change = (Math.random() - 0.5) * volatility;
-        const meanReversion = (baseScore - currentScore) * 0.1;
-        currentScore += change + meanReversion;
+        const meanReversion = (baseScore - currentScore) * 0.05;
+        const trend = trendDirection * (i / days) * 2; // Gradual trend over time
+        
+        currentScore += change + meanReversion + trend;
         
         // Keep scores within reasonable bounds
         currentScore = Math.max(0, Math.min(100, currentScore));
@@ -49,11 +51,11 @@ const mockData = {
         }
     },
     
-    // Historical reputation data
+    // Historical reputation data (3 months)
     reputationHistory: {
-        dates: generateDates(30),
-        musk: generateReputationScores(72, 6, 30),
-        trump: generateReputationScores(66, 8, 30)
+        dates: generateDates(90),
+        musk: generateReputationScores(72, 8, 90, 1), // Slight upward trend
+        trump: generateReputationScores(66, 10, 90, -0.5) // Slight downward trend
     },
     
     // Sentiment breakdown data

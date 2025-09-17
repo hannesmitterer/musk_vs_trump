@@ -20,22 +20,31 @@ const chartColors = {
 function initReputationChart() {
     if (typeof Chart === 'undefined') {
         console.warn('Chart.js not available - skipping chart initialization');
-        document.getElementById('reputationChart').innerHTML = '<div style="text-align: center; padding: 50px; color: #666;">Chart.js loading... Please refresh if charts don\'t appear.</div>';
+        const chartElement = document.getElementById('reputationChart');
+        if (chartElement) {
+            chartElement.innerHTML = '<div style="text-align: center; padding: 50px; color: #666;">Chart.js loading... Please refresh if charts don\'t appear.</div>';
+        }
         return;
     }
     
-    const ctx = document.getElementById('reputationChart').getContext('2d');
+    const ctx = document.getElementById('reputationChart');
+    if (!ctx) {
+        console.warn('reputationChart canvas not found');
+        return;
+    }
+    
+    const chartCtx = ctx.getContext('2d');
     
     // Create gradients
-    const muskGradient = ctx.createLinearGradient(0, 0, 0, 400);
+    const muskGradient = chartCtx.createLinearGradient(0, 0, 0, 400);
     muskGradient.addColorStop(0, chartColors.musk.gradient[0]);
     muskGradient.addColorStop(1, chartColors.musk.gradient[1]);
     
-    const trumpGradient = ctx.createLinearGradient(0, 0, 0, 400);
+    const trumpGradient = chartCtx.createLinearGradient(0, 0, 0, 400);
     trumpGradient.addColorStop(0, chartColors.trump.gradient[0]);
     trumpGradient.addColorStop(1, chartColors.trump.gradient[1]);
     
-    reputationChart = new Chart(ctx, {
+    reputationChart = new Chart(chartCtx, {
         type: 'line',
         data: {
             labels: mockData.reputationHistory.dates,
@@ -51,8 +60,9 @@ function initReputationChart() {
                     pointBackgroundColor: chartColors.musk.primary,
                     pointBorderColor: '#ffffff',
                     pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 3,
+                    pointHoverRadius: 6,
+                    pointHoverBorderWidth: 3
                 },
                 {
                     label: 'Donald Trump',
@@ -65,8 +75,9 @@ function initReputationChart() {
                     pointBackgroundColor: chartColors.trump.primary,
                     pointBorderColor: '#ffffff',
                     pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 3,
+                    pointHoverRadius: 6,
+                    pointHoverBorderWidth: 3
                 }
             ]
         },
@@ -83,10 +94,11 @@ function initReputationChart() {
                     labels: {
                         usePointStyle: true,
                         font: {
-                            size: 14,
+                            size: 13,
                             weight: '600'
                         },
-                        padding: 20
+                        padding: 20,
+                        color: '#374151'
                     }
                 },
                 tooltip: {
@@ -123,10 +135,14 @@ function initReputationChart() {
                         display: false
                     },
                     ticks: {
-                        maxTicksLimit: 8,
+                        maxTicksLimit: 6,
                         callback: function(value, index, ticks) {
                             const date = new Date(this.getLabelForValue(value));
                             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        },
+                        color: '#6b7280',
+                        font: {
+                            size: 11
                         }
                     }
                 },
@@ -143,7 +159,14 @@ function initReputationChart() {
                     min: 0,
                     max: 100,
                     grid: {
-                        color: 'rgba(0, 0, 0, 0.1)'
+                        color: 'rgba(0, 0, 0, 0.1)',
+                        display: true
+                    },
+                    ticks: {
+                        color: '#6b7280',
+                        font: {
+                            size: 11
+                        }
                     }
                 }
             }
